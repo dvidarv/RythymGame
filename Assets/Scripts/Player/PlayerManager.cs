@@ -11,10 +11,10 @@ public class PlayerManager : MonoBehaviour
         _playerActionController = GetComponent<PlayerActionController>();
 
         // -- Subscribe to Input Events --
-        _playerInputController.OnMoveUpTap += ( ) => _playerActionController.MoveToDirection(Vector2.up);
-        _playerInputController.OnMoveDownTap += ( ) => _playerActionController.MoveToDirection(Vector2.down);
-        _playerInputController.OnMoveLeftTap += ( ) => _playerActionController.MoveToDirection(Vector2.left);
-        _playerInputController.OnMoveRightTap += ( ) => _playerActionController.MoveToDirection(Vector2.right);
+        _playerInputController.OnMoveUpTap += ( ) => _playerActionController.TryMoveToDirection(Vector2.up);
+        _playerInputController.OnMoveDownTap += ( ) => _playerActionController.TryMoveToDirection(Vector2.down);
+        _playerInputController.OnMoveLeftTap += ( ) => _playerActionController.TryMoveToDirection(Vector2.left);
+        _playerInputController.OnMoveRightTap += ( ) => _playerActionController.TryMoveToDirection(Vector2.right);
 
     }
 }

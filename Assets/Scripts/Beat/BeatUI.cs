@@ -1,31 +1,45 @@
 using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 
 public class BeatUI : MonoBehaviour
 {
     [SerializeField] private GameObject leftBar;
     [SerializeField] private GameObject rightBar;
-    [SerializeField] private BeatCreator beatCreator;
 
-    [SerializeField] private float beatTime = 1f;
+    [SerializeField] private RectTransform centerPoint;
+    [SerializeField] private RectTransform leftSpawnPoint;
+    [SerializeField] private RectTransform rightSpawnPoint;
 
-    private void Start()
+    [SerializeField] private float travelTime = 2f;
+
+    public float TravelTime => travelTime;
+
+
+    public void CreateBeat()
     {
-        StartCoroutine(StartBeatCoroutine());
-    }
-    private IEnumerator StartBeatCoroutine()
-    {
-        yield return new WaitForSeconds(beatTime*4);
-        while (true)
-        {
-            yield return new WaitForSeconds(beatTime);
-            CreateBeat();
-        }
-    }
-    private void CreateBeat()
-    {
-        GameObject leftBarInstance = Instantiate(leftBar, transform);
-        GameObject rightBarInstance = Instantiate(rightBar, transform);
+        GameObject left = Instantiate(leftBar, transform);
+        GameObject right = Instantiate(rightBar, transform);
+
+
+        RectTransform leftRect = left.GetComponent<RectTransform>();
+        RectTransform rightRect = right.GetComponent<RectTransform>();
+
+
+        // spawn positions
+        leftRect.position = leftSpawnPoint.position;
+        rightRect.position = rightSpawnPoint.position;
+
+
+        // move to center exactly on beat
+        leftRect.DOMove(
+            centerPoint.position,
+            travelTime
+        ).SetEase(Ease.Linear);
+
+
+        rightRect.DOMove(
+            centerPoint.position,
+            travelTime
+        ).SetEase(Ease.Linear);
     }
 }

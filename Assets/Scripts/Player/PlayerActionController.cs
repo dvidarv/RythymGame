@@ -3,12 +3,14 @@ using UnityEngine;
 
 public class PlayerActionController : MonoBehaviour
 {
-    [SerializeField] private BeatCreator beatCreator;
+    [SerializeField] private BeatManager beatManager;
+    private bool canMove = false;
     public void TryMoveToDirection(Vector2 direction)
     {
-        if (beatCreator.IsBeatActive())
+        if (canMove)
         {
             MoveToDirection(direction);
+            beatManager.ConsumeBeat();
         }
     }
     private void MoveToDirection(Vector2 direction)
@@ -17,5 +19,9 @@ public class PlayerActionController : MonoBehaviour
 
         transform.DOMove(target, 0f)
             .SetEase(Ease.OutQuad);
+    }
+    public void EnableMovement(bool enable)
+    {
+        canMove = enable;
     }
 }
